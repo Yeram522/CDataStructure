@@ -86,7 +86,69 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	//exception check
+	if(ll->head == NULL) return;
+	
+	LinkedList *oddlist = malloc(sizeof(LinkedList));
+	oddlist->head = NULL;
+	oddlist->size = 0;
+
+	ListNode* dummy = malloc(sizeof(ListNode));
+
+	ListNode* cur = ll->head;
+	ListNode* prev = ll->head;
+	while(cur != NULL){
+		
+		if((cur->item)%2 == 0) //even node -> pass
+		{
+			prev = cur;
+			cur = cur->next;
+			continue;
+		}
+
+
+		// is odd node
+		ListNode* odd = malloc(sizeof(ListNode));
+		odd->item = cur->item;
+		odd->next = cur->next;
+		// dummy - cur
+		if(oddlist->size == 0)
+		{
+			oddlist->head = odd;
+			dummy = odd;
+		}
+		else{
+			dummy->next = odd;
+		}
+		oddlist->size += 1;
+
+		// odd num is in head
+		if(cur == ll->head)
+		{
+			ll->head = cur->next; //head reconnect
+			
+		}
+		else
+		{
+			prev->next = cur->next; //disconnect with prev node
+		}
+		ll->size -= 1;
+		
+		// move to next node
+		free(cur);
+		cur = NULL;
+
+		cur = odd->next;
+
+		odd->next = NULL;
+		dummy = odd;
+	}
+
+
+	// connect odd list back of the origin list
+	prev->next = oddlist->head;
+	ll->size += oddlist->size;
+	return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

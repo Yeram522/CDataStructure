@@ -38,7 +38,7 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
-	int c, i;
+	int c = -1, i;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
 
@@ -102,7 +102,64 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	//exception
+	if(ll->head == NULL)
+		return;
+
+	int split_size = ll->size - (ll->size)/2;
+
+	ListNode* cur = ll->head;
+
+	ListNode* frontCur = resultFrontList->head;
+	ListNode* backCur = resultBackList->head;
+
+	while(resultFrontList->size + resultBackList->size < ll->size){
+		ListNode* new = malloc(sizeof(ListNode));
+		new->item = cur->item;
+		new->next = NULL;
+		//1. fill Front List
+		if(resultFrontList->size < split_size)
+		{		
+			//front list의 마지막 노드가 ll의 노드를 가리킨다.
+			if(resultFrontList->head == NULL)
+			{
+				resultFrontList->head = new; //FrontList head point cur
+			}
+			else{
+				frontCur->next = new;
+			}
+
+			resultFrontList->size += 1; //FrontList size 증가.
+
+			//ll의 노드 연결을 끊고 재 연결해준다.
+			ll->head = cur->next;
+
+			frontCur = new;	
+		}
+		else{//2. fill Back List
+			//Back list의 마지막 노드가 ll의 노드를 가리킨다.
+			if(resultBackList->head == NULL)
+			{
+				resultBackList->head = new; //BackList head point cur
+			}
+			else{
+				backCur->next = new;
+			}
+
+			resultBackList->size += 1; //BackList size 증가.
+
+			//ll의 노드 연결을 끊고 재 연결해준다.
+	
+			ll->head = cur->next;
+
+			backCur = new;
+		}
+
+		cur = cur->next;
+	}
+
+
+	return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

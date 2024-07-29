@@ -86,7 +86,69 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	//exception check
+	if(ll->head == NULL) return;
+	
+	LinkedList *evenlist = malloc(sizeof(LinkedList));
+	evenlist->head = NULL;
+	evenlist->size = 0;
+
+	ListNode* dummy = malloc(sizeof(ListNode));
+
+	ListNode* cur = ll->head;
+	ListNode* prev = ll->head;
+	while(cur != NULL){
+		
+		if((cur->item)%2 != 0) //even node -> pass
+		{
+			prev = cur;
+			cur = cur->next;
+			continue;
+		}
+
+
+		// is even node
+		ListNode* even = malloc(sizeof(ListNode));
+		even->item = cur->item;
+		even->next = cur->next;
+		// dummy - cur
+		if(evenlist->size == 0)
+		{
+			evenlist->head = even;
+			dummy = even;
+		}
+		else{
+			dummy->next = even;
+		}
+		evenlist->size += 1;
+
+		// even num is in head
+		if(cur == ll->head)
+		{
+			ll->head = cur->next; //head reconnect
+			
+		}
+		else
+		{
+			prev->next = cur->next; //disconnect with prev node
+		}
+		ll->size -= 1;
+		
+		// move to next node
+		free(cur);
+		cur = NULL;
+
+		cur = even->next;
+
+		even->next = NULL;
+		dummy = even;
+	}
+
+
+	// connect even list back of the origin list
+	prev->next = evenlist->head;
+	ll->size += evenlist->size;
+	return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
