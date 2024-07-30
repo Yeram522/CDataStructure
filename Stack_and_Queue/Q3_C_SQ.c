@@ -104,6 +104,27 @@ int main()
 int isStackPairwiseConsecutive(Stack *s)
 {
   /* add your code here */
+  //only uses push() and pop()
+  //satisfied return 1 , not return 2
+
+  while (1)
+  {
+	if(isEmptyStack(s) == 1) break;
+
+	int a = pop(s);
+	int b = pop(s);
+	if( a != INT_MIN && b != INT_MIN)
+	{
+		if(a + 1 == b) continue;
+
+		return 0;
+	}
+
+	return 0;
+  }
+  
+  return 1;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

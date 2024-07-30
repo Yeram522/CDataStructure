@@ -15,7 +15,7 @@ Purpose: Implementing the required functions for Question 7 */
 
 typedef struct _listnode
 {
-	int item;
+	char item;
 	struct _listnode *next;
 } ListNode;	// You should not change the definition of ListNode
 
@@ -104,7 +104,44 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	//initiate stack
+	Stack stack;
+	stack.ll.head = NULL;
+	stack.ll.size = 0;
+	
+	while (*expression != '\0')
+	{
+		// 여는 괄호이면 스택에 넣는다.
+		if(*expression == '(' ||*expression == '[' || *expression == '{' ){
+			push(&stack, *expression);
+		}
+		else{// 닫는 괄호라면 스택을 pop한 뒤 쌍이 맞는 지 체크한다.
+			char c = pop(&stack);
+			char target;
+			switch (*expression)
+			{
+			case ')':
+				target = '(';
+				break;
+			case ']':
+				target = '[';
+				break;
+			case '}':
+				target = '{';
+				break;
+			default:
+				break;
+			}
+
+			if(c != target) return 1;
+		}
+		expression++;
+	}
+
+	if(isEmptyStack(&stack)==0) return 1;
+
+	return 0;
+	
 }
 
 ////////////////////////////////////////////////////////////
