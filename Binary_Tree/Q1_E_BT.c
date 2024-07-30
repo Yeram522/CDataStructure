@@ -116,7 +116,21 @@ int main()
 int identical(BTNode *tree1, BTNode *tree2)
 
 {
-   /* add your code here */
+   // 두 트리가 모두 NULL이면 동일함
+    if (tree1 == NULL && tree2 == NULL) 
+        return 1;
+    
+    // 한 트리만 NULL이면 동일하지 않음
+    if (tree1 == NULL || tree2 == NULL) 
+        return 0;
+    
+    // 현재 노드의 값이 다르면 동일하지 않음
+    if (tree1->item != tree2->item) 
+        return 0;
+    
+    // 왼쪽 서브트리와 오른쪽 서브트리 모두 동일한지 재귀적으로 확인
+    return identical(tree1->left, tree2->left) && 
+           identical(tree1->right, tree2->right);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
