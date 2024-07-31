@@ -90,7 +90,27 @@ int main()
 
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	Stack s; 
+	s.top = NULL;
+    BSTNode* current = root;
+
+    while (current != NULL || !isEmpty((&s))) {
+        // 현재 노드의 가장 왼쪽 노드까지 스택에 푸시
+        while (current != NULL) {
+            push(&s, current);
+            current = current->left;
+        }
+
+        // 스택에서 노드를 팝하여 출력
+        current = pop(&s);
+        printf("%d, ", current->item);
+
+        // 오른쪽 서브트리로 이동
+        current = current->right;
+    }
+
+
+	 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
