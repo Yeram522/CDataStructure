@@ -92,10 +92,11 @@ int moveMaxToFront(ListNode **ptrHead)
 	if(ptrHead == NULL) return 0;
 
   	ListNode *pre, *cur, *maxp, *maxn;
-	int max = -1e9;
+	//int max = -1e9; 이런식으로 상수값으로 초기화를 해주면 예상치 못한 오류가 생길 수 잇음
+	int max = (*ptrHead)->item;
 	//init
 	pre = *ptrHead;
-	cur = *ptrHead;
+	cur = (*ptrHead)->next;
 
 	//1. 순회하며 max의 prev를 저장한다.
    	while(cur != NULL){

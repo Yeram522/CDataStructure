@@ -104,15 +104,15 @@ int insertSortedLL(LinkedList *ll, int item)
 
 	// 3.Linked List에 노드가 1개 이상 있을 경우 ll->size >= 1
 	ListNode * node = ll->head; // 시작노드
-	ListNode * prev = ll->head; // 이전노드
+	ListNode * prev = NULL; // 이전노드
 	
 	//linked list를 순회한다.
-	
 	while(1)
 	{
 		if(node->item == item){
 			return -1;
 		}
+
 		//타겟 노드보다 작으면 다음으로 넘어간다.
 		if(node->item < item)
 		{
@@ -136,19 +136,28 @@ int insertSortedLL(LinkedList *ll, int item)
 			new->next = ll->head;
 		}
 
-		// 새로운 노드가 현재 노드를 가리키도록 해준다.
-		new->next = prev->next;
-		
 		// 새 노드 값 설정
 		new->item = item;
 
 		// 이전 노드의 연결을 끊고 현재노드에 연결시킨다.
-		prev->next = new;
+		 // 헤드에 삽입
+    	if (prev == NULL) {
+        	new->next = ll->head;
+        	ll->head = new;
+    	} else {
+        // 중간이나 끝에 삽입
+        	new->next = prev->next;
+        	prev->next = new;
+    	}
+		
+		
 		
 		break;
 	}
 
+	//ll 사이즈 증가.
 	ll->size += 1;
+
 	return index;
 }
 

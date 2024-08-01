@@ -109,6 +109,9 @@ void levelOrderTraversal(BSTNode* root)
 			enqueue(&q->head, &q->tail, tmp->right);
 	}
 	
+	//메모리 해제
+	free(q);
+	q = NULL;
 	
 }
 

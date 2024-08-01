@@ -97,10 +97,13 @@ void moveOddItemsToBack(LinkedList *ll)
 
 	ListNode* cur = ll->head;
 	ListNode* prev = ll->head;
+	ListNode *lastEven = NULL; // 마지막 짝수 노드를 가리킴
+
 	while(cur != NULL){
 		
 		if((cur->item)%2 == 0) //even node -> pass
 		{
+			lastEven = cur;
 			prev = cur;
 			cur = cur->next;
 			continue;
@@ -146,7 +149,17 @@ void moveOddItemsToBack(LinkedList *ll)
 
 
 	// connect odd list back of the origin list
-	prev->next = oddlist->head;
+	
+
+	if(lastEven == NULL)
+	{
+		ll->head = oddlist->head;
+	}
+	else{
+		prev->next = oddlist->head;
+	}
+
+
 	ll->size += oddlist->size;
 	return;
 }

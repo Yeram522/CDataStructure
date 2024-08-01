@@ -97,32 +97,35 @@ void moveEvenItemsToBack(LinkedList *ll)
 
 	ListNode* cur = ll->head;
 	ListNode* prev = ll->head;
+	ListNode *lastOdd = NULL; // 마지막 짝수 노드를 가리킴
+
 	while(cur != NULL){
 		
 		if((cur->item)%2 != 0) //even node -> pass
 		{
+			lastOdd = cur;
 			prev = cur;
 			cur = cur->next;
 			continue;
 		}
 
 
-		// is even node
-		ListNode* even = malloc(sizeof(ListNode));
-		even->item = cur->item;
-		even->next = cur->next;
+		// is odd node
+		ListNode* odd = malloc(sizeof(ListNode));
+		odd->item = cur->item;
+		odd->next = cur->next;
 		// dummy - cur
 		if(evenlist->size == 0)
 		{
-			evenlist->head = even;
-			dummy = even;
+			evenlist->head = odd;
+			dummy = odd;
 		}
 		else{
-			dummy->next = even;
+			dummy->next = odd;
 		}
 		evenlist->size += 1;
 
-		// even num is in head
+		// odd num is in head
 		if(cur == ll->head)
 		{
 			ll->head = cur->next; //head reconnect
@@ -138,15 +141,25 @@ void moveEvenItemsToBack(LinkedList *ll)
 		free(cur);
 		cur = NULL;
 
-		cur = even->next;
+		cur = odd->next;
 
-		even->next = NULL;
-		dummy = even;
+		odd->next = NULL;
+		dummy = odd;
 	}
 
 
-	// connect even list back of the origin list
-	prev->next = evenlist->head;
+	// connect odd list back of the origin list
+	
+
+	if(lastOdd == NULL)
+	{
+		ll->head = evenlist->head;
+	}
+	else{
+		prev->next = evenlist->head;
+	}
+
+
 	ll->size += evenlist->size;
 	return;
 }

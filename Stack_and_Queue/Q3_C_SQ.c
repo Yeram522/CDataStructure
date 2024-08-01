@@ -115,7 +115,7 @@ int isStackPairwiseConsecutive(Stack *s)
 	int b = pop(s);
 	if( a != INT_MIN && b != INT_MIN)
 	{
-		if(a + 1 == b) continue;
+		if(a + 1 == b || b + 1 == a) continue;
 
 		return 0;
 	}
